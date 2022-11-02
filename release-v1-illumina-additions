@@ -1,0 +1,718 @@
+local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
+
+local win = DiscordLib:Window("Dogworl hub V2 (Release 1, additions by illumina)")
+
+local serv = win:Server("Cool scripts and stuff",  "")
+local thing = win:Server("Other things", "")
+local plyr = win:Server("Player", "")
+
+local player = plyr:Channel("Player")
+
+local sldr = player:Slider("Walkspeed (1-100)", 0, 100, 40, function(walkspeed)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
+    end)
+
+
+
+local sldrr = player:Slider("Walkspeed (1-1000)", 0, 1000, 40, function(walkspeedd)
+game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkspeedd
+ end)
+
+ player:Button("Reset Walkspeed", function()
+    sldr:Change(16)
+    sldrr:Change(16)
+    end)
+
+player:Seperator()
+
+local sldrrr = player:Slider("Jump Power (1-100)", 0, 100, 40, function(jumppower)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumppower
+     end)
+
+local sldrrrr = player:Slider("Jump Power (1-1000)", 0, 1000, 40, function(jumppowerr)
+game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumppowerr
+end)
+
+player:Button("Reset Jump Power", function()
+    sldrrr:Change(50)
+    sldrrrr:Change(50)
+    end)
+
+
+
+local btns = serv:Channel("Human ball script" , "Autospam TP discord link")
+
+btns:Button("Human ball", function()
+DiscordLib:Notification("Executed", "Activated script. Refresh/reset to disable", "k")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+
+local SPEED_MULTIPLIER = 50
+local JUMP_POWER = 100
+local JUMP_GAP = 0.3
+
+local character = game.Players.LocalPlayer.Character
+
+for i,v in ipairs(character:GetDescendants()) do
+   if v:IsA("BasePart") then
+       v.CanCollide = false
+   end
+end
+
+local ball = character.HumanoidRootPart
+ball.Shape = Enum.PartType.Ball
+ball.Size = Vector3.new(5,5,5)
+local humanoid = character:WaitForChild("Humanoid")
+local params = RaycastParams.new()
+params.FilterType = Enum.RaycastFilterType.Blacklist
+params.FilterDescendantsInstances = {character}
+
+local tc = RunService.RenderStepped:Connect(function(delta)
+   ball.CanCollide = true
+   humanoid.PlatformStand = true
+if UserInputService:GetFocusedTextBox() then return end
+if UserInputService:IsKeyDown("W") then
+ball.RotVelocity -= Camera.CFrame.RightVector * delta * SPEED_MULTIPLIER
+end
+if UserInputService:IsKeyDown("A") then
+ball.RotVelocity -= Camera.CFrame.LookVector * delta * SPEED_MULTIPLIER
+end
+if UserInputService:IsKeyDown("S") then
+ball.RotVelocity += Camera.CFrame.RightVector * delta * SPEED_MULTIPLIER
+end
+if UserInputService:IsKeyDown("D") then
+ball.RotVelocity += Camera.CFrame.LookVector * delta * SPEED_MULTIPLIER
+end
+--ball.RotVelocity = ball.RotVelocity - Vector3.new(0,ball.RotVelocity.Y/50,0)
+end)
+
+UserInputService.JumpRequest:Connect(function()
+local result = workspace:Raycast(
+ball.Position,
+Vector3.new(
+0,
+-((ball.Size.Y/2)+JUMP_GAP),
+0
+),
+params
+)
+if result then
+ball.Velocity = ball.Velocity + Vector3.new(0,JUMP_POWER,0)
+end
+end)
+
+Camera.CameraSubject = ball
+humanoid.Died:Connect(function() tc:Disconnect() end)
+end)
+
+
+
+local btns = serv:Channel("Autotp spam Discord invite" , "")
+btns:Button("Spam discord invite", function()
+    DiscordLib:Notification("Executed", "Activated script. Rejoin to disable", "k")
+    local Spam = true   --change to false if you dont want the bot to spam
+    local spammsg = "(Discoard .gg/5KgukrEfNX" --might not work if message is too long
+    
+    spawn(function()
+    repeat task.wait()
+    pcall(function()
+    local Players = game.Players:GetChildren()
+    local randomPlayer
+    repeat task.wait()
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    randomPlayer = Players[math.random(1,#Players)]
+    until randomPlayer ~= game:GetService("Players").LocalPlayer
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end)
+    until false
+    end)
+    if Spam == true then
+    repeat task.wait(1)
+    spawn(function()
+    pcall(function()
+    game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(""..spammsg.. " "..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.."" ,"All")
+    game.Players.LocalPlayer.Character.Humanoid.Jump = true
+    end)
+    end)
+    until false
+    end
+end)
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+local btns = serv:Channel("Auto bypass")
+btns:Button("Enable auto bypass", function()
+    DiscordLib:Notification("Script executed", "Activated script. Rejoin to disable", "k")
+    local NotificationBindable = Instance.new("BindableFunction")
+    NotificationBindable.OnInvoke = callback
+    --
+    game.StarterGui:SetCore("SendNotification",  {
+     Title = "USE AN ALT";
+     Text = "You are gonna get banned after a while";
+     Icon = "";
+     Duration = 5;
+     Callback = NotificationBindable;
+    })
+
+
+
+-- you can only use the words that are listed under here
+
+local Bypasses = {
+["ass"] = "as{{aieixzvzx:s}}",
+["cumming"] = "cu{{aieixzvzx:mming}}",
+["i love dick"] = "i love {{aieixzvzx:dick}}",
+["dick sucker"] = "di{{aieixzvzx:ck sucker}}",
+["asshole"] = "as{{aieixzvzx:shole}}",
+["bitch"] = "bit{{aieixzvzx:ch}}",
+["cock"] = "co{{aieixzvzx:ck}}",
+["cunt"] = "cu{{aieixzvzx:nt}}",
+["dick"] = "di{{zczxczvz:ck}}",
+["dyke"] = "dy{{aieixzvzx:ke}}",
+["faggot"] = "fa{{aieixzvzx:ggot}}",
+["fuck"] = "fu{{aieixzvzx:ck}}",
+["gaylord"] = "gayl{{aieixzvzx:ord}}",
+["cum"] = "cu{{aieixzvzx:m}}",
+["sex"] = "se{{aieixzvzx:x}}",
+["hitler"] = "hit{{aieixzvzx:ler}}",
+["cum"] = "cu{{aieixzvzx:m}}",
+["kike"] = "ki{{aieixzvzx:ke}}",
+["motherfucker"] = "motherf{{aieixzvzx:ucker}}",
+["nigga"] = "ni{{aieixzvzx:gga}}",
+["nigger"] = "ni{{aieixzvzx:gger}}",
+["piss"] = "p{{aieixzvzx:iss}}",
+["penis"] = "pe{{aieixzvzx:nis}}",
+["pussy"] = "pu{{aieixzvzx:ssy}}",
+["shit"] = "sh{{aieixzvzx:it}}",
+["slut"] = "sl{{aieixzvzx:ut}}",
+["whore"] = "who{{aieixzvzx:re}}",
+["discord"] = "disco{{aieixzvzx:rd}}",
+["kys"] = "k{{aieixzvzx:ys}}",
+["slave"] = "sla{{aieixzvzx:ve}}",
+["niggers"] = "ni{{aieixzvzx:ggers}}",
+["kill"] = "ki{{aieixzvzx:ll}}",
+["date"] = "da{{aieixzvzx:te}}",
+["raped"] = "ra{{aieixzvzx:ped}}",
+["rape"] = "ra{{aieixzvzx:pe}}",
+["hentai"] = "hen{{aieixzvzx:tai}}",
+["pornhub"] = "po{{aieixzvzx:rnhub}}",
+["childporn"] = "childpo{{aieixzvzx:rn}}",
+["xvideos"] = "xvi{{aieixzvzx:deos}}",
+["fucking"] = "fuc{{aieixzvzx:king}}",
+["tits"] = "ti{{aieixzvzx:ts}}",
+["discord.com"] = "disco{{aieixzvzx:rd.com}}"
+
+
+}
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remote = ReplicatedStorage:FindFirstChild("SayMessageRequest", true)
+
+local ChatBypass; ChatBypass = hookmetamethod(Remote, "__namecall", function(self, ...)
+local Method = getnamecallmethod()
+local Arguments = {...}
+
+if self == Remote and Method == "FireServer" then
+local Message = Arguments[1]
+local Split = Message:split(" ")
+local FinalMessage = ""
+
+for _, x in next, Split do
+for _, Bypass in next, Bypasses do
+    if x:lower() == _ then
+        if x:upper() ~= x then
+            Message = Message:gsub(x, Bypass)
+            FinalMessage = Message .. " ng"
+        else
+            Message = Message:gsub(x, Bypass):upper()
+            FinalMessage = Message:gsub(x, Bypass):upper() .. " ng"
+        end
+    end
+end
+end
+
+if FinalMessage ~= "" then
+Arguments[1] = FinalMessage
+end
+
+return ChatBypass(self, unpack(Arguments))
+end
+
+return ChatBypass(self, ...)
+end)
+end)
+
+local btns = serv:Channel("Bloxton hub")
+btns:Button("Execute bloxton hub", function()
+    DiscordLib:Notification("Script executed", "Activated script. Press close button to close", "k")
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/moon606/Scripts/main/Test.lua'))()
+end)
+
+local btns = serv:Channel("Fake cuff")
+btns:Button("Execute fake cuff", function()
+    DiscordLib:Notification("Script executed", "Activated script. Enter target username in box", "k")
+    local cuffanim = "http://www.roblox.com/Asset?ID=2027914996"
+    local anim = Instance.new("Animation")
+    local main = Instance.new("ScreenGui")
+    local frame = Instance.new("Frame")
+    local username = Instance.new("TextBox")
+    local prankbutton = Instance.new("TextButton")
+    local notpranking = true
+    local plr = game.Players.LocalPlayer
+    local debounce = true
+    anim.AnimationId = cuffanim
+    main.ResetOnSpawn = false
+    local PlayAnimation = plr.Character.Humanoid:LoadAnimation(anim)
+    
+    frame.Selectable = true
+    frame.Active = true
+    frame.Draggable = true
+    frame.Size = UDim2.new(.4,0,.1,0)
+    username.Position = UDim2.new(.1,0,0,0)
+    username.Size = UDim2.new(.6,0,1,0)
+    prankbutton.Size = UDim2.new(.3,0,1,0)
+    prankbutton.Position = UDim2.new(.7,0,0,0)
+    prankbutton.Parent = frame
+    username.Parent = frame
+    function check(humanoid)
+        local m = humanoid:GetPlayingAnimationTracks()
+        for i = 1, #m do
+            if m[i].Animation.AnimationId == cuffanim then
+                return m[i]
+            end
+        end
+        return false
+    end
+    frame.Parent = main
+    prankbutton.Text = "PRANK!!"
+    prankbutton.TextScaled = true
+    main.Parent = plr.PlayerGui
+    username.Text = ''
+    username.PlaceholderText = "Put username here"
+    prankbutton.MouseButton1Down:Connect(function()
+        if notpranking then
+            local allplayers = game.Players:GetChildren()
+            local s = nil
+            for i = 1, #allplayers do
+                if string.find(string.lower(allplayers[i].Name), string.lower(username.Text)) and username.Text ~= '' then
+                    s = allplayers[i]
+                    break
+                end
+            end
+    
+            if s then
+                notpranking = false
+                prankbutton.Text = 'stop'
+    local PlayAnimation = plr.Character:WaitForChild("Humanoid"):LoadAnimation(anim)
+                PlayAnimation:Play()
+                local character = s.Character
+                local currentSpeed = 0
+                local pos = character.HumanoidRootPart.Position
+                while notpranking == false do
+                    if game.Players:FindFirstChild(s.Name) then 
+                        if s.Character:FindFirstChild("UpperTorso") and plr.Character:FindFirstChild("HumanoidRootPart") then
+                            pos = Vector3.new(character.HumanoidRootPart.Position.X, 0, character.HumanoidRootPart.Position.Z)
+                            task.wait(.01)
+                            if s.Character then
+                            if s.Character.Humanoid.Health ~= 0 then
+                            if s.Character:FindFirstChild("UpperTorso") then
+                            currentSpeed = (pos-Vector3.new(character:WaitForChild("HumanoidRootPart").Position.X, 0, character.HumanoidRootPart.Position.Z)).magnitude
+                            plr.Character.HumanoidRootPart.CFrame = s.Character:FindFirstChild("UpperTorso").CFrame
+                            local dotof = s.Character.Humanoid.MoveDirection:Dot(s.Character.HumanoidRootPart.CFrame.LookVector)
+                            plr.Character.HumanoidRootPart.CFrame += plr.Character.HumanoidRootPart.CFrame.LookVector * (2.5 + currentSpeed*4*dotof)
+                                plr.Character.HumanoidRootPart.CFrame *= CFrame.Angles(math.rad(15), 0, 0)
+                            end
+                            else
+                                notpranking = true
+                                prankbutton.Text = "PRANK!!"
+                                end
+                            if plr.Character:WaitForChild("Humanoid").Sit == true then
+                                plr.Character.Humanoid.Sit = false
+                            end
+                            else
+                            task.wait(.01)
+                            
+                        end
+                        else
+                        task.wait(.01)
+                        prankbutton.Text = "PRANK!!"
+                        notpranking = true
+                        end
+                    else
+                        task.wait(.01)
+                        prankbutton.Text = "PRANK!!"
+                        notpranking = true
+                    end
+                end
+                if check(plr.Character.Humanoid) ~= nil then
+                check(plr.Character.Humanoid):Stop()
+                end
+            else
+                if debounce then
+                    debounce = false
+                    username.Text = "Invalid Username."
+                    username.PlaceholderText = "Invalid Username."
+                    wait(2)
+                    username.Text = ""
+                    username.PlaceholderText = "Put username here"
+                    debounce = true
+                end
+            end
+        else
+            prankbutton.Text = "PRANK!!"
+            notpranking = true
+        end
+    end)
+    plr.CharacterAdded:Connect(function()
+        if not notpranking then
+            PlayAnimation = plr.Character:WaitForChild("Humanoid"):LoadAnimation(anim)
+            repeat PlayAnimation:Play() wait()
+            until check(plr.Character.Humanoid) ~= nil
+        end
+    end)
+end)
+local btns = thing:Channel("Old dogworl hub")
+btns:Button("Execute V1", function()
+    DiscordLib:Notification("Script executed", "Activated script. Rejoin to disable", "k")
+-- Dogworl hub beta 1.3
+-- By moneydrop#0638
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local main = Instance.new("Frame")
+local title = Instance.new("TextLabel")
+local discord = Instance.new("TextButton")
+local yomama = Instance.new("TextButton")
+local roll = Instance.new("TextButton")
+local refresh = Instance.new("TextButton")
+local disclaimer = Instance.new("TextLabel")
+local bypass = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+main.Name = "main"
+main.Parent = ScreenGui
+main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+main.Position = UDim2.new(0.15463917, 0, 0.437288135, 0)
+main.Size = UDim2.new(0, 568, 0, 295)
+main.Active = true
+main.Draggable = true
+
+title.Name = "title"
+title.Parent = main
+title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+title.Size = UDim2.new(0, 568, 0, 50)
+title.Font = Enum.Font.FredokaOne
+title.Text = "Dogworl hub beta 1.3"
+title.TextColor3 = Color3.fromRGB(0, 0, 0)
+title.TextSize = 14.000
+
+discord.Name = "discord"
+discord.Parent = main
+discord.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+discord.Position = UDim2.new(0.0385542177, 0, 0.271186441, 0)
+discord.Size = UDim2.new(0, 126, 0, 50)
+discord.Font = Enum.Font.FredokaOne
+discord.Text = "Discord invite spam"
+discord.TextColor3 = Color3.fromRGB(0, 0, 0)
+discord.TextSize = 14.000
+discord.MouseButton1Down:connect(function()
+	local Spam = true   --change to false if you dont want the bot to spam
+	local spammsg = "(Discoard .gg/5KgukrEfNX" --might not work if message is too long
+
+	spawn(function()
+		repeat task.wait()
+			pcall(function()
+				local Players = game.Players:GetChildren()
+				local randomPlayer
+				repeat task.wait()
+					game.Players.LocalPlayer.Character.Humanoid.Jump = true
+					randomPlayer = Players[math.random(1,#Players)]
+				until randomPlayer ~= game:GetService("Players").LocalPlayer
+				game.Players.LocalPlayer.Character.Humanoid.Jump = true
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+				game.Players.LocalPlayer.Character.Humanoid.Jump = true
+			end)
+		until false
+	end)
+	if Spam == true then
+		repeat task.wait(1)
+			spawn(function()
+				pcall(function()
+					game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(""..spammsg.. " "..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.."" ,"All")
+					game.Players.LocalPlayer.Character.Humanoid.Jump = true
+				end)
+			end)
+		until false
+	end
+end)
+
+yomama.Name = "yomama"
+yomama.Parent = main
+yomama.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+yomama.Position = UDim2.new(0.359853387, 0, 0.271186441, 0)
+yomama.Size = UDim2.new(0, 126, 0, 50)
+yomama.Font = Enum.Font.FredokaOne
+yomama.Text = "\"Yo mama\" spam"
+yomama.TextColor3 = Color3.fromRGB(0, 0, 0)
+yomama.TextSize = 14.000
+yomama.MouseButton1Down:connect(function()
+	local Spam = true   --change to false if you dont want the bot to spam
+	local spammsg = "YO MAMA YO MAMA YO MAMA " --might not work if message is too long
+
+	spawn(function()
+		repeat task.wait()
+			pcall(function()
+				local Players = game.Players:GetChildren()
+				local randomPlayer
+				repeat task.wait()
+					game.Players.LocalPlayer.Character.Humanoid.Jump = true
+					randomPlayer = Players[math.random(1,#Players)]
+				until randomPlayer ~= game:GetService("Players").LocalPlayer
+				game.Players.LocalPlayer.Character.Humanoid.Jump = true
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = randomPlayer.Character.HumanoidRootPart.CFrame
+				game.Players.LocalPlayer.Character.Humanoid.Jump = true
+			end)
+		until false
+	end)
+	if Spam == true then
+		repeat task.wait(1)
+			spawn(function()
+				pcall(function()
+					game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(""..spammsg.. " "..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.. ""..spammsg.."" ,"All")
+					game.Players.LocalPlayer.Character.Humanoid.Jump = true
+				end)
+			end)
+		until false
+	end
+end)
+
+roll.Name = "roll"
+roll.Parent = main
+roll.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+roll.Position = UDim2.new(0.0385542177, 0, 0.549152553, 0)
+roll.Size = UDim2.new(0, 126, 0, 50)
+roll.Font = Enum.Font.FredokaOne
+roll.Text = "Funny ass roll script"
+roll.TextColor3 = Color3.fromRGB(0, 0, 0)
+roll.TextSize = 14.000
+roll.MouseButton1Down:connect(function()
+	local UserInputService = game:GetService("UserInputService")
+	local RunService = game:GetService("RunService")
+	local Camera = workspace.CurrentCamera
+
+	local SPEED_MULTIPLIER = 50
+	local JUMP_POWER = 100
+	local JUMP_GAP = 0.3
+
+	local character = game.Players.LocalPlayer.Character
+
+	for i,v in ipairs(character:GetDescendants()) do
+		if v:IsA("BasePart") then
+			v.CanCollide = false
+		end
+	end
+
+	local ball = character.HumanoidRootPart
+	ball.Shape = Enum.PartType.Ball
+	ball.Size = Vector3.new(5,5,5)
+	local humanoid = character:WaitForChild("Humanoid")
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Blacklist
+	params.FilterDescendantsInstances = {character}
+
+	local tc = RunService.RenderStepped:Connect(function(delta)
+		ball.CanCollide = true
+		humanoid.PlatformStand = true
+		if UserInputService:GetFocusedTextBox() then return end
+		if UserInputService:IsKeyDown("W") then
+			ball.RotVelocity -= Camera.CFrame.RightVector * delta * SPEED_MULTIPLIER
+		end
+		if UserInputService:IsKeyDown("A") then
+			ball.RotVelocity -= Camera.CFrame.LookVector * delta * SPEED_MULTIPLIER
+		end
+		if UserInputService:IsKeyDown("S") then
+			ball.RotVelocity += Camera.CFrame.RightVector * delta * SPEED_MULTIPLIER
+		end
+		if UserInputService:IsKeyDown("D") then
+			ball.RotVelocity += Camera.CFrame.LookVector * delta * SPEED_MULTIPLIER
+		end
+		--ball.RotVelocity = ball.RotVelocity - Vector3.new(0,ball.RotVelocity.Y/50,0)
+	end)
+
+	UserInputService.JumpRequest:Connect(function()
+		local result = workspace:Raycast(
+			ball.Position,
+			Vector3.new(
+				0,
+				-((ball.Size.Y/2)+JUMP_GAP),
+				0
+			),
+			params
+		)
+		if result then
+			ball.Velocity = ball.Velocity + Vector3.new(0,JUMP_POWER,0)
+		end
+	end)
+
+	Camera.CameraSubject = ball
+	humanoid.Died:Connect(function() tc:Disconnect() end)
+end)
+
+refresh.Name = "refresh"
+refresh.Parent = main
+refresh.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+refresh.Position = UDim2.new(0.359658301, 0, 0.549152553, 0)
+refresh.Size = UDim2.new(0, 125, 0, 50)
+refresh.Font = Enum.Font.FredokaOne
+refresh.Text = "refresh/escapecuffs"
+refresh.TextColor3 = Color3.fromRGB(0, 0, 0)
+refresh.TextSize = 14.000
+refresh.MouseButton1Down:connect(function()
+	
+end)
+
+disclaimer.Name = "disclaimer"
+disclaimer.Parent = main
+disclaimer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+disclaimer.BorderColor3 = Color3.fromRGB(0, 0, 0)
+disclaimer.Position = UDim2.new(0.292253524, 0, 0.800000012, 0)
+disclaimer.Size = UDim2.new(0, 200, 0, 50)
+disclaimer.Font = Enum.Font.FredokaOne
+disclaimer.Text = "These scripts are not mine. Credit to the original creators."
+disclaimer.TextColor3 = Color3.fromRGB(255, 255, 255)
+disclaimer.TextSize = 14.000
+
+bypass.Name = "bypass"
+bypass.Parent = main
+bypass.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+bypass.Position = UDim2.new(0.644366205, 0, 0.271186441, 0)
+bypass.Size = UDim2.new(0, 126, 0, 50)
+bypass.Font = Enum.Font.FredokaOne
+bypass.Text = "Auto bypass"
+bypass.TextColor3 = Color3.fromRGB(0, 0, 0)
+bypass.TextSize = 14.000
+bypass.MouseButton1Down:connect(function()
+	local NotificationBindable = Instance.new("BindableFunction")
+	NotificationBindable.OnInvoke = callback
+	--
+	game.StarterGui:SetCore("SendNotification",  {
+		Title = "USE AN ALT";
+		Text = "You are gonna get banned after a while";
+		Icon = "";
+		Duration = 5;
+		Callback = NotificationBindable;
+	})
+
+
+
+	-- you can only use the words that are listed under here
+
+	local Bypasses = {
+		["ass"] = "as{{aieixzvzx:s}}",
+		["cumming"] = "cu{{aieixzvzx:mming}}",
+		["i love dick"] = "i love {{aieixzvzx:dick}}",
+		["dick sucker"] = "di{{aieixzvzx:ck sucker}}",
+		["asshole"] = "as{{aieixzvzx:shole}}",
+		["bitch"] = "bit{{aieixzvzx:ch}}",
+		["cock"] = "co{{aieixzvzx:ck}}",
+		["cunt"] = "cu{{aieixzvzx:nt}}",
+		["dick"] = "di{{zczxczvz:ck}}",
+		["dyke"] = "dy{{aieixzvzx:ke}}",
+		["faggot"] = "fa{{aieixzvzx:ggot}}",
+		["fuck"] = "fu{{aieixzvzx:ck}}",
+		["gaylord"] = "gayl{{aieixzvzx:ord}}",
+		["cum"] = "cu{{aieixzvzx:m}}",
+		["sex"] = "se{{aieixzvzx:x}}",
+		["hitler"] = "hit{{aieixzvzx:ler}}",
+		["cum"] = "cu{{aieixzvzx:m}}",
+		["kike"] = "ki{{aieixzvzx:ke}}",
+		["motherfucker"] = "motherf{{aieixzvzx:ucker}}",
+		["nigga"] = "ni{{aieixzvzx:gga}}",
+		["nigger"] = "ni{{aieixzvzx:gger}}",
+		["piss"] = "p{{aieixzvzx:iss}}",
+		["penis"] = "pe{{aieixzvzx:nis}}",
+		["pussy"] = "pu{{aieixzvzx:ssy}}",
+		["shit"] = "sh{{aieixzvzx:it}}",
+		["slut"] = "sl{{aieixzvzx:ut}}",
+		["whore"] = "who{{aieixzvzx:re}}",
+		["discord"] = "disco{{aieixzvzx:rd}}",
+		["kys"] = "k{{aieixzvzx:ys}}",
+		["slave"] = "sla{{aieixzvzx:ve}}",
+		["niggers"] = "ni{{aieixzvzx:ggers}}",
+		["kill"] = "ki{{aieixzvzx:ll}}",
+		["date"] = "da{{aieixzvzx:te}}",
+		["raped"] = "ra{{aieixzvzx:ped}}",
+		["rape"] = "ra{{aieixzvzx:pe}}",
+		["hentai"] = "hen{{aieixzvzx:tai}}",
+		["pornhub"] = "po{{aieixzvzx:rnhub}}",
+		["childporn"] = "childpo{{aieixzvzx:rn}}",
+		["xvideos"] = "xvi{{aieixzvzx:deos}}",
+		["fucking"] = "fuc{{aieixzvzx:king}}",
+		["tits"] = "ti{{aieixzvzx:ts}}",
+		["discord.com"] = "disco{{aieixzvzx:rd.com}}"
+
+
+	}
+
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local Remote = ReplicatedStorage:FindFirstChild("SayMessageRequest", true)
+
+	local ChatBypass; ChatBypass = hookmetamethod(Remote, "__namecall", function(self, ...)
+		local Method = getnamecallmethod()
+		local Arguments = {...}
+
+		if self == Remote and Method == "FireServer" then
+			local Message = Arguments[1]
+			local Split = Message:split(" ")
+			local FinalMessage = ""
+
+			for _, x in next, Split do
+				for _, Bypass in next, Bypasses do
+					if x:lower() == _ then
+						if x:upper() ~= x then
+							Message = Message:gsub(x, Bypass)
+							FinalMessage = Message .. " ng"
+						else
+							Message = Message:gsub(x, Bypass):upper()
+							FinalMessage = Message:gsub(x, Bypass):upper() .. " ng"
+						end
+					end
+				end
+			end
+
+			if FinalMessage ~= "" then
+				Arguments[1] = FinalMessage
+			end
+
+			return ChatBypass(self, unpack(Arguments))
+		end
+
+		return ChatBypass(self, ...)
+	end)
+	
+end)
+end)
+
+local lbls = serv:Channel("Credits")
+
+lbls:Label("Credits to moneydrop#0638, Dogworl#3735, illumina#0001,")
+lbls:Label("NathanTSG#6975,TheManonTheMoon/antiBloxton_Moon#9998,")
+lbls:Label("and beatpeat#4532")
